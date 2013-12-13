@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   
+       <Button
+           android:id="@+id/play_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="10dp"
+           android:paddingLeft="30dp"
+           android:paddingRight="30dp" />
+       
+    <RelativeLayout
+        android:id="@+id/example_window"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_margin="10dp" 
+        android:padding="10dp" 
+        android:background="#404040"
+        android:gravity="bottom" >
+        
+		<com.captioning.android.CaptionView 
+		    android:id="@+id/example_caption"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginBottom="20dp" 
+		    android:background="#000000"
+		    android:gravity="center_horizontal"
+		    android:textColor="#FFFFFF" />
+		
+	</RelativeLayout>
+	
+    <ScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+		
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:padding="10dp" >
+
+	            <TextView
+	                android:id="@+id/language_title"
+	                android:layout_width="150dp"
+	                android:layout_height="match_parent"
+	                android:layout_centerVertical="true"
+	                android:text="Language:" />
+
+		        <Spinner 
+		            android:id="@+id/language_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/language_title" />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/font_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Font:" />
+		        <Spinner 
+		            android:id="@+id/font_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/font_title" />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/size_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Size:" />
+		        <Spinner 
+		            android:id="@+id/size_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/size_title" />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/style_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Style:" />
+		        <Spinner 
+		            android:id="@+id/style_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/style_title" />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/edge_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Edge Type:" />
+		        <Spinner 
+		            android:id="@+id/edge_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/edge_title"  />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/text_color_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+		            android:text="Text Color:" />
+		        <Spinner 
+		            android:id="@+id/text_color_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/text_color_title"  />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/bg_color_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Background Color:" />
+		        <Spinner 
+		            android:id="@+id/bg_color_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/bg_color_title"  />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/edge_color_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Edge Color:" />
+		        <Spinner 
+		            android:id="@+id/edge_color_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content" 
+		            android:layout_toRightOf="@id/edge_color_title" />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/text_opacity_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Text Opacity" />
+		        <Spinner 
+		            android:id="@+id/text_opacity_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/text_opacity_title"  />
+	        </RelativeLayout>
+	        <RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp" >
+	            <TextView 
+		            android:id="@+id/bg_opacity_title"
+		            android:layout_width="150dp"
+		            android:layout_height="wrap_content" 
+	                android:layout_centerVertical="true"
+		            android:text="Background Opacity:" />
+		        <Spinner 
+		            android:id="@+id/bg_opacity_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/bg_opacity_title"  />
+	        </RelativeLayout>
+        
+	        <Button
+	            android:id="@+id/defaults_button"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" 
+           		android:layout_margin="10dp" />
+	        
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
