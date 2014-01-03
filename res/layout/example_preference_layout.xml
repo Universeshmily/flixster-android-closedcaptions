@@ -22,7 +22,7 @@
         android:background="#404040"
         android:gravity="bottom" >
         
-		<com.captioning.android.CaptionView 
+		<com.flixster.android.captioning.CaptionView 
 		    android:id="@+id/example_caption"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"

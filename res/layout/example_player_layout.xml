@@ -9,25 +9,25 @@
         android:layout_height="fill_parent"
         android:layout_centerInParent="true" />
 
-	<com.captioning.android.CaptionView 
+	<com.flixster.android.captioning.CaptionView 
         android:id="@+id/caption1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-	<com.captioning.android.CaptionView 
+	<com.flixster.android.captioning.CaptionView 
         android:id="@+id/caption2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-	<com.captioning.android.CaptionView 
+	<com.flixster.android.captioning.CaptionView 
         android:id="@+id/caption3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-	<com.captioning.android.CaptionView 
+	<com.flixster.android.captioning.CaptionView 
         android:id="@+id/caption4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
