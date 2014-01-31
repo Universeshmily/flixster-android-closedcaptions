@@ -52,6 +52,46 @@
 	            android:padding="10dp" >
 
 	            <TextView
+	                android:id="@+id/video_uri_title"
+	                android:layout_width="150dp"
+	                android:layout_height="match_parent"
+	                android:layout_centerVertical="true"
+	                android:text="Video URL:" />
+
+		        <EditText 
+		            android:id="@+id/video_uri"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/video_uri_title" />
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:padding="10dp" >
+
+	            <TextView
+	                android:id="@+id/captions_uri_title"
+	                android:layout_width="150dp"
+	                android:layout_height="match_parent"
+	                android:layout_centerVertical="true"
+	                android:text="Captions URL:" />
+
+		        <EditText 
+		            android:id="@+id/captions_uri"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_toRightOf="@id/captions_uri_title" />
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center_vertical"
+	            android:padding="10dp" >
+
+	            <TextView
 	                android:id="@+id/language_title"
 	                android:layout_width="150dp"
 	                android:layout_height="match_parent"

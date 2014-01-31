@@ -22,6 +22,11 @@ import android.widget.VideoView;
  */
 public class CaptionedPlayer extends Activity {
 
+    protected static final int NOTIFY_FETCH_SUCCESS = 0;
+    protected static final int NOTIFY_FETCH_CREATE_STREAM_FAILED = 1;
+    protected static final int NOTIFY_FETCH_IO_EXCEPTION = 2;
+    protected static final int NOTIFY_FETCH_DISABLED = 3;
+
     private static final String FILE_PROTOCOL = "file://";
     private static final int CAPTION_MONITOR_INTERVAL_MS = 300;
     private static final int TIMEOUT_CONNECTION = 4000;
@@ -34,6 +39,7 @@ public class CaptionedPlayer extends Activity {
     private List<TimedTextElement> captions;
     private String captionUrl;
     private DisplayMetrics outMetrics;
+    private Handler notifyHandler;
 
     /**
      * Initializes the provided CaptionViews and prepares to fetch the captions from the url. Should be called within
@@ -54,22 +60,45 @@ public class CaptionedPlayer extends Activity {
         outMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
 
-        if (CaptionPreferences.instance().getCaptionsEnabled() && captionUrl != null && !captionUrl.equals("")) {
-            VersionedCaptionHelper.instance().setSystemCaptionPreferences(this);
-            for (CaptionView cv : captionViews) {
-                cv.applyPreferences();
-                cv.setVisibility(View.INVISIBLE);
+        if (CaptionPreferences.instance().getCaptionsEnabled()) {
+            if (captionUrl != null && !captionUrl.equals("")) {
+                VersionedCaptionHelper.instance().setSystemCaptionPreferences(this);
+                for (CaptionView cv : captionViews) {
+                    cv.applyPreferences();
+                    cv.setVisibility(View.INVISIBLE);
+                }
+                fetchCaptions(successHandler, errorHandler, captionUrl);
+            } else {
+                CaptionLogger.d("CaptionedPlayer.prepareCaptions caption url is empty");
+                errorHandler.sendEmptyMessage(NOTIFY_FETCH_CREATE_STREAM_FAILED);
             }
-            fetchCaptions(successHandler, errorHandler, captionUrl);
+        } else {
+            CaptionLogger.d("CaptionedPlayer.prepareCaptions captions are currently disabled");
+            errorHandler.sendEmptyMessage(NOTIFY_FETCH_DISABLED);
         }
     }
 
     /**
-     * Initiates the thread which updates captions. Will continue to run until paused.
+     * Pass in a Handler to keep track of the status of the captions. Upon success, or an error in fetching the
+     * captions, an empty message will be passed to the Handler, with the "what" attribute containing the message, as
+     * one of the NOTIFY_FETCH variables.
+     * 
+     * Otherwise identical to the other prepareCaptions() method
+     */
+    protected void prepareCaptions(VideoView vv, CaptionView[] cvs, String url, Handler notificationHanlder) {
+        notifyHandler = notificationHanlder;
+        prepareCaptions(vv, cvs, url);
+    }
+
+    /**
+     * Initiates the thread which updates captions. Will continue to run until stopped by stopCaptions().
      */
     protected void rollCaptions() {
         if (CaptionPreferences.instance().getCaptionsEnabled() && captionUrl != null && !captionUrl.equals("")) {
             captionsActive = true;
+            for (CaptionView cv : captionViews) {
+                cv.setVisibility(View.INVISIBLE);
+            }
 
             if (!threadActive) {
                 Thread captionMonitorThread = new Thread(new Runnable() {
@@ -94,14 +123,11 @@ public class CaptionedPlayer extends Activity {
     }
 
     /**
-     * Pauses the thread which updates captions, and hides currently visible text.
+     * Stops the thread which updates captions
      */
     protected void stopCaptions() {
-        for (CaptionView cv : captionViews) {
-            cv.setVisibility(View.INVISIBLE);
-        }
         captionsActive = false;
-        CaptionLogger.d("CaptionedPlayer.stopCaptions caption display paused");
+        CaptionLogger.d("CaptionedPlayer.stopCaptions caption display stopped");
     }
 
     /**
@@ -115,8 +141,9 @@ public class CaptionedPlayer extends Activity {
         @Override
         public void handleMessage(Message msg) {
             if (captions != null) {
-                int width = outMetrics.widthPixels;
-                int height = outMetrics.heightPixels;
+                int xPos, yPos;
+                int width = videoview.getWidth();
+                int height = videoview.getHeight();
                 int textSizeOffset = CaptionView.getSizeDisplayOffset();
                 int stackedViewSpacing = CaptionView.getStackedViewSpacing();
 
@@ -128,6 +155,8 @@ public class CaptionedPlayer extends Activity {
                 }
                 currentPosition = videoview.getCurrentPosition();
                 for (int i = ttIndex; i < captions.size(); i++) {
+                    xPos = videoview.getLeft();
+                    yPos = videoview.getTop();
                     TimedTextElement ttElement = captions.get(i);
                     if (ttElement.end <= currentPosition) {
                         if (captionViews[ttElement.region].getVisibility() == View.VISIBLE) {
@@ -140,10 +169,11 @@ public class CaptionedPlayer extends Activity {
                             CaptionLogger.d("showing index " + i + ", text " + ttElement.text);
                             MarginLayoutParams cvParams = (MarginLayoutParams) captionViews[ttElement.region]
                                     .getLayoutParams();
-                            float xOrigin = (ttElement.originX + textSizeOffset) / 100.0f;
-                            float yOrigin = (ttElement.originY + textSizeOffset) / 100.0f;
-                            cvParams.setMargins((int) (width * xOrigin), (int) (height * yOrigin)
-                                    + (stackedViewSpacing * ttElement.region), 0, 5);
+                            int xOrigin = xPos + (int) (width * (ttElement.originX + textSizeOffset) / 100.0f);
+                            int yOrigin = yPos + (int) (height * (ttElement.originY + textSizeOffset) / 100.0f)
+                                    + (stackedViewSpacing * ttElement.region);
+
+                            cvParams.setMargins(xOrigin, yOrigin, 0, 5);
                             captionViews[ttElement.region].setText(ttElement.text);
                             captionViews[ttElement.region].setVisibility(View.VISIBLE);
                         }
@@ -162,6 +192,7 @@ public class CaptionedPlayer extends Activity {
         public void handleMessage(Message msg) {
             captions = (List<TimedTextElement>) msg.obj;
             CaptionLogger.d("CaptionedPlayer.successHandler fetch captions succeeded");
+            CaptionedPlayer.this.notify(msg.what);
         }
     };
 
@@ -170,8 +201,15 @@ public class CaptionedPlayer extends Activity {
         @Override
         public void handleMessage(Message msg) {
             CaptionLogger.d("CaptionedPlayer.errorHandler fetch captions failed");
+            CaptionedPlayer.this.notify(msg.what);
         }
     };
+
+    private void notify(int message) {
+        if (notifyHandler != null) {
+            notifyHandler.sendEmptyMessage(message);
+        }
+    }
 
     /** Parses the captions provided through the urlString, and notifies of success or failure */
     private static void fetchCaptions(final Handler successHandler, final Handler errorHandler, final String urlString) {
@@ -194,13 +232,14 @@ public class CaptionedPlayer extends Activity {
                     if (is != null) {
                         CaptionsXmlParser parser = new CaptionsXmlParser();
                         List<TimedTextElement> ttElements = parser.parse(is);
-                        successHandler.sendMessage(Message.obtain(null, 0, Collections.unmodifiableList(ttElements)));
+                        successHandler.sendMessage(Message.obtain(null, NOTIFY_FETCH_SUCCESS,
+                                Collections.unmodifiableList(ttElements)));
                     } else {
-                        errorHandler.sendEmptyMessage(0);
+                        errorHandler.sendEmptyMessage(NOTIFY_FETCH_CREATE_STREAM_FAILED);
                         CaptionLogger.w("CaptionedPlayer.fetchCaptions InputStream null");
                     }
                 } catch (IOException e) {
-                    errorHandler.sendEmptyMessage(0);
+                    errorHandler.sendEmptyMessage(NOTIFY_FETCH_IO_EXCEPTION);
                     CaptionLogger.w("CaptionPlayer.fetchCaptions IOException on accessing InputStream", e);
                 } finally {
                     if (is != null) {
@@ -208,7 +247,6 @@ public class CaptionedPlayer extends Activity {
                             is.close();
                         } catch (IOException e) {
                             CaptionLogger.w("CaptionPlayer.fetchCaptions IOException on closing InputStream", e);
-
                         }
                     }
                 }

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.captioning.R;
@@ -68,7 +69,14 @@ public class ExamplePreferencePage extends Activity {
         playButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ExamplePreferencePage.this, ExamplePlayer.class));
+                Intent intent = new Intent(ExamplePreferencePage.this, ExamplePlayer.class);
+                Bundle b = new Bundle();
+                String videoUri = ((EditText) findViewById(R.id.video_uri)).getText().toString();
+                String captionsUri = ((EditText) findViewById(R.id.captions_uri)).getText().toString();
+                b.putString("video", videoUri);
+                b.putString("captions", captionsUri);
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
     }

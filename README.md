@@ -1,7 +1,7 @@
 Flixster Closed Captioning Library
 ==================================
 
-Android library for handling closed captioning with appropriate SMTPE-TT/TTML files.  Please take a look at the following classes to get started:
+Android library for handling closed captioning alongside video with appropriate SMTPE-TT/TTML files.  Please take a look at the following classes to get started:
 
 ###### CaptionedPlayer
 A class that should be extended by the Activity you wish to control displaying captions.
@@ -19,6 +19,8 @@ An extension of a TextView that understands and applies the desired changes acco
 An extension of the default android Log class.
 
 Additionally, take a look at the example classes for a possible implementation.
+
+**Note that this library is optimized for displaying captions alongside videos shown in full-screen on a device.  Captions may display incorrectly if the video window takes up only a small portion of a device's screen.**
 
 License
 -------
