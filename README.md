@@ -25,7 +25,7 @@ Additionally, take a look at the example classes for a possible implementation.
 License
 -------
 ```
-Copyright 2013 Flixster Inc.
+Copyright 2014 Flixster Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

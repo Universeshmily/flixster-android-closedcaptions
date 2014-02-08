@@ -155,30 +155,32 @@ public class CaptionedPlayer extends Activity {
                 }
                 currentPosition = videoview.getCurrentPosition();
                 for (int i = ttIndex; i < captions.size(); i++) {
-                    xPos = videoview.getLeft();
-                    yPos = videoview.getTop();
                     TimedTextElement ttElement = captions.get(i);
-                    if (ttElement.end <= currentPosition) {
-                        if (captionViews[ttElement.region].getVisibility() == View.VISIBLE) {
-                            captionViews[ttElement.region].setVisibility(View.INVISIBLE);
-                            CaptionLogger.d("hiding index " + i + ", text " + ttElement.text);
-                        }
-                        ttIndex++;
-                    } else if (ttElement.begin <= currentPosition) {
-                        if (captionViews[ttElement.region].getVisibility() != View.VISIBLE) {
-                            CaptionLogger.d("showing index " + i + ", text " + ttElement.text);
-                            MarginLayoutParams cvParams = (MarginLayoutParams) captionViews[ttElement.region]
-                                    .getLayoutParams();
-                            int xOrigin = xPos + (int) (width * (ttElement.originX + textSizeOffset) / 100.0f);
-                            int yOrigin = yPos + (int) (height * (ttElement.originY + textSizeOffset) / 100.0f)
-                                    + (stackedViewSpacing * ttElement.region);
+                    if (ttElement.region < captionViews.length) {
+                        if (ttElement.end <= currentPosition) {
+                            if (captionViews[ttElement.region].getVisibility() == View.VISIBLE) {
+                                captionViews[ttElement.region].setVisibility(View.INVISIBLE);
+                                CaptionLogger.d("hiding index " + i + ", text " + ttElement.text);
+                            }
+                            ttIndex++;
+                        } else if (ttElement.begin <= currentPosition) {
+                            if (captionViews[ttElement.region].getVisibility() != View.VISIBLE) {
+                                CaptionLogger.d("showing index " + i + ", text " + ttElement.text);
+                                xPos = videoview.getLeft();
+                                yPos = videoview.getTop();
+                                MarginLayoutParams cvParams = (MarginLayoutParams) captionViews[ttElement.region]
+                                        .getLayoutParams();
+                                int xOrigin = xPos + (int) (width * (ttElement.originX + textSizeOffset) / 100.0f);
+                                int yOrigin = yPos + (int) (height * (ttElement.originY + textSizeOffset) / 100.0f)
+                                        + (stackedViewSpacing * ttElement.region);
 
-                            cvParams.setMargins(xOrigin, yOrigin, 0, 5);
-                            captionViews[ttElement.region].setText(ttElement.text);
-                            captionViews[ttElement.region].setVisibility(View.VISIBLE);
+                                cvParams.setMargins(xOrigin, yOrigin, 0, 5);
+                                captionViews[ttElement.region].setText(ttElement.text);
+                                captionViews[ttElement.region].setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            break;
                         }
-                    } else {
-                        break;
                     }
                 }
             }
