@@ -9,9 +9,9 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -20,7 +20,7 @@ import android.widget.VideoView;
 /**
  * Activity which handles the display of captions. Should be extended by the activity which handles video playback.
  */
-public class CaptionedPlayer extends Activity {
+public class CaptionedPlayer extends FragmentActivity {
 
     protected static final int NOTIFY_FETCH_SUCCESS = 0;
     protected static final int NOTIFY_FETCH_CREATE_STREAM_FAILED = 1;
