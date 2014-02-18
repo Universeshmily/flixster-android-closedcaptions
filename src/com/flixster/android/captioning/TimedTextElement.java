@@ -171,27 +171,27 @@ public class TimedTextElement {
     }
 
     private long smpte23_98_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (Math.ceil(3753.75 * frames) + 90090 * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
+        return (long) (Math.ceil(3753.75 * frames) + 90090l * (long) (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
     }
 
     private long smpte24_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (3750 * frames + 90000 * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
+        return (long) (3750 * frames + 90000l * (long) (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
     }
 
     private long smpte25_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (3600 * frames + 90000 * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
+        return (long) (3600 * frames + 90000l * (long) (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
     }
 
     private long smpte29_97_Drop_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (3003 * frames + 90090 * seconds + 26999973 * minutes / 5 + 323999676 * hours) * 1000 / 90000;
+        return (long) (3003 * frames + 90090l * seconds + 26999973l * minutes / 5 + 323999676l * hours) * 1000 / 90000;
     }
 
     private long smpte29_97_NonDrop_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (3003 * frames + 90090 * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
+        return (long) (3003 * frames + 90090l * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
     }
 
     private long smpte30_ToAbsoluteTime(double hours, double minutes, double seconds, double frames) {
-        return (long) (3000 * frames + 90000 * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
+        return (long) (3000 * frames + 90000l * (seconds + 60 * (minutes + 60 * hours))) * 1000 / 90000;
     }
 
 }
