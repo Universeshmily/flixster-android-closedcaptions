@@ -1,4 +1,4 @@
-package com.flixster.android.captioning.example;
+package com.flixster.android.captioning;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;

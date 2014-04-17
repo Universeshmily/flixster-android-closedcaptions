@@ -1,4 +1,4 @@
-package com.flixster.android.captioning.example;
+package com.flixster.android.captioning;
 
 import java.util.ArrayList;
 import java.util.List;
