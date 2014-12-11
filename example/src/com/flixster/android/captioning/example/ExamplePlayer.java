@@ -1,4 +1,4 @@
-package com.flixster.android.captioning;
+package com.flixster.android.captioning.example;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.captioning.R;
 import com.flixster.android.captioning.CaptionView;
 import com.flixster.android.captioning.CaptionedPlayer;
 

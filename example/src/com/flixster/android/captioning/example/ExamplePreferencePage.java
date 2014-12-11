@@ -1,4 +1,4 @@
-package com.flixster.android.captioning;
+package com.flixster.android.captioning.example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.captioning.R;
 import com.flixster.android.captioning.CaptionPreferences;
 import com.flixster.android.captioning.CaptionView;
 
@@ -103,7 +102,7 @@ public class ExamplePreferencePage extends Activity {
                         example.setText("[ CAPTION ]");
                         break;
                     case CaptionPreferences.LANGUAGE_SPANISH:
-                        example.setText("[ SUBTêTULO ]");
+                        example.setText("[ SUBTï¿½TULO ]");
                         break;
                     case CaptionPreferences.LANGUAGE_FRENCH:
                         example.setText("[ SOUS-TITRE ]");
@@ -112,7 +111,7 @@ public class ExamplePreferencePage extends Activity {
                         example.setText("[ UNTERTITEL ]");
                         break;
                     case CaptionPreferences.LANGUAGE_PORTUGUESE:
-                        example.setText("[ SUBTêTULO ]");
+                        example.setText("[ SUBTï¿½TULO ]");
                         break;
                 }
                 example.applyPreferences();
